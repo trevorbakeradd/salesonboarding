@@ -18,10 +18,25 @@
     .backface-hidden {
       backface-visibility: hidden;
     }
+
+    body {
+      background-image: url('https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/assets/flower-bg.jpg'); /* Replace with your actual image link */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .overlay {
+      background-color: rgba(255, 240, 245, 0.92);
+      backdrop-filter: blur(2px);
+    }
   </style>
 </head>
-<body class="bg-gradient-to-br from-pink-100 to-rose-100 min-h-screen">
-  <div id="root" class="p-6"></div>
+<body>
+  <div class="min-h-screen overlay p-6">
+    <div id="root"></div>
+  </div>
 
   <!-- React & Babel -->
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
