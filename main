@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales & Onboarding Competition</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .perspective {
+      perspective: 1000px;
+    }
+    .transform-style-preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-white to-gray-100 min-h-screen">
+  <div id="root" class="p-6"></div>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    const { useState } = React;
+
+    const prizes = [
+      { amount: 100, quantity: 22 },
+      { amount: 200, quantity: 8 },
+      { amount: 300, quantity: 4 },
+      { amount: 500, quantity: 2 },
+    ];
+
+    const generatePrizeCards = () => {
+      const allPrizes = prizes.flatMap(prize =>
+        Array.from({ length: prize.quantity }, () => prize.amount)
+      );
+      return allPrizes.sort(() => 0.5 - Math.random());
+    };
+
+    function PrizeCard({ amount }) {
+      const [flipped, setFlipped] = useState(false);
+      return (
+        <div className="w-32 h-40 m-2 perspective" onClick={() => setFlipped(!flipped)}>
+          <div className={`relative w-full h-full duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}>
+            <div className="absolute w-full h-full bg-blue-200 rounded-xl flex items-center justify-center text-xl font-bold backface-hidden">
+              🎁 Click me
+            </div>
+            <div className="absolute w-full h-full bg-green-200 rounded-xl flex items-center justify-center text-xl font-bold rotate-y-180 backface-hidden">
+              🪙 {amount} MAD
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      const [cards] = useState(generatePrizeCards());
+
+      return (
+        <main>
+          <div className="max-w-6xl mx-auto text-center">
+            <h1 className="text-4xl font-bold mb-4">Sales & Onboarding Competition</h1>
+            <p className="text-lg mb-10 text-gray-600">
+              Flip a card to reveal your prize!
+            </p>
+            <div className="flex flex-wrap justify-center">
+              {cards.map((amount, index) => (
+                <PrizeCard key={index} amount={amount} />
+              ))}
+            </div>
+          </div>
+        </main>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
